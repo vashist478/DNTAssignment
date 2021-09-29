@@ -1,0 +1,193 @@
+﻿@model FormValidation_Assignment1.Models.UserViewModel
+@*@using FormValidation_Assignment1;
+    @model CascadingModel*@
+
+@{
+    ViewData["Title"] = "SignUp";
+}
+
+<h1>SignUp</h1>
+<style type="text/css">
+    span {
+        color: red;
+        background: white;
+    }
+</style>
+<form class="form-horizontal" asp-for="SignUp" asp-controller="Account" method="POST">
+    <fieldset>
+        <div id="legend">
+            <legend class="">Register</legend>
+        </div>
+        <div class="control-group">
+            <!-- Username -->
+            <label class="control-label" for="username">Username</label>
+            <div class="controls">
+                <input type="text" asp-for="Username" />
+                <span asp-validation-for="Username" class="txt-danger"></span>
+            </div>
+        </div>
+
+        <div class="control-group">
+
+            <label class="control-label" for="email">Name</label>
+            <div class="controls">
+                <input type="text" asp-for="Name" />
+                <span asp-validation-for="Name" class="txt-danger"></span>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <!-- Password-->
+            <label class="control-label" for="password">Password</label>
+            <div class="controls">
+                <input type="password" asp-for="Password" />
+                <span asp-validation-for="Password" class="txt-danger"></span>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <!-- Password -->
+            <label class="control-label" for="password_confirm">Password (Confirm)</label>
+            <div class="controls">
+                <input type="password" id="inpPassword" asp-for="Password" />
+                <span asp-validation-for="Password" class="txt-danger"></span>
+            </div>
+        </div>
+        <div class="control-group">
+
+            <label class="control-label" for="password_confirm">Country</label>
+            <div class="controls">
+                <select id="ddlCountry" asp-for="Country" class="form-control" asp-items="@(new SelectList(ViewBag.Country, "CountryId", "CountryName"))">
+                    <option value="0">--Select Country--</option>
+                </select>
+                @*<span asp-validation-for="Country" class="txt-danger"></span>*@
+                <span id="spnCountryErrorMsg" class="txt-danger"></span>
+            </div>
+        </div>
+
+        @*<div class="control-group">
+                <label class="control-label" for="password_confirm">State</label>
+                <div class="controls">
+                    <select id="ddlState" class="form-control" asp-items="@(new SelectList(ViewBag.State, "StateId", "StateName"))">
+                        <option value="">--Select State--</option>
+                    </select>
+                </div>
+            </div>*@
+
+        <div class="control-group">
+            <label class="control-label" for="password_confirm">State</label>
+            <div class="controls">
+                <select id="ddlStates" class="form-control" asp-for="State">
+                    <option value="0">--Select State--</option>
+                </select>
+                @*<span asp-validation-for="Country" class="txt-danger"></span>*@
+                <span id="spnStateErrorMsg" class="txt-danger"></span>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="password_confirm">Gender</label>
+            <div class="controls">
+                @*@foreach (var item in Html.GetEnumSelectList<Gender>())
+                    {
+                        <input type="radio" asp-for="Gender" value="@item.Text" />@item.Text
+                    }*@
+                @foreach (var gender in Model.Genders)
+                {
+                    <input type="radio" asp-for="Gender" id="Gender@(gender)" value="1" />@gender
+                }
+                <span asp-validation-for="Gender" class="txt-danger"></span>
+            </div>
+        </div>
+        <div class="control-group">
+
+            <label class="control-label" for="password_confirm"> Accept Terms: </label>
+            <div class="controls">
+                <input type="checkbox" asp-for="Terms" />
+                <span asp-validation-for="Terms" class="txt-danger">
+                </span>
+            </div>
+        </div>
+
+
+
+        <div class="control-group">
+            <!-- Button -->
+            <div class="controls">
+                <input type="submit" onclick="ValidateCascadingInfo()" value="Sign Up" />
+            </div>
+        </div>
+    </fieldset>
+</form>
+
+
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        /* Used to validate cascading dropdown list*/
+        function ValidateCascadingInfo() {
+            var Country = document.getElementById("ddlCountry").value;
+            var state = document.getElementById("ddlStates").value;
+
+            var spnCountryErrorMsg = document.getElementById("spnCountryErrorMsg");
+            var spnStateErrorMsg = document.getElementById("spnStateErrorMsg");
+          
+            if (Country == "0") {
+
+                spnCountryErrorMsg.innerHTML = "please select country";
+            }
+            else if (state == "0") {
+
+                spnStateErrorMsg.innerHTML = "please select state";
+            }
+            else {
+                spnCountryErrorMsg.innerHTML = "";
+                spnStateErrorMsg.innerHTML = "";
+            }
+
+
+        }
+
+        /*Sk: Bind state dropdown on change of country dropdown*/
+        $(document).ready(function () {
+            $("#ddlCountry").change(function () {
+                $.get("/Account/GetState", { CountryId: $("#ddlCountry").val() }, function (data) {
+
+                    var spnCountryErrorMsg = document.getElementById("spnCountryErrorMsg").innerHTML="";
+                    var spnStateErrorMsg = document.getElementById("spnStateErrorMsg").innerHTML="";
+                    $("#ddlStates").empty();
+                    $("#ddlStates").append("<option value='" + "0" + "'>" + "--select state--" + "</option>")
+                    $.each(data, function (index, row) {
+                       
+                        $("#ddlStates").append("<option value='" + row.stateId + "'>" + row.stateName + "</option>")
+                    });
+                });
+            })
+        });
+
+
+        jQuery.validator.unobtrusive.adapters.add("validatecheckbox", function (options) {
+            /* Validation for checkbox */
+            // jQuery Validate equates "required" with "mandatory" for checkbox elements
+            if (options.element.tagName.toUpperCase() == "INPUT" && options.element.type.toUpperCase() == "CHECKBOX") {
+
+                options.rules["required"] = true;
+                if (options.message) {
+                    options.messages["required"] = options.message;
+                }
+            }
+
+            if (options.element.tagName.toUpperCase() == "INPUT" && options.element.type.toUpperCase() == "RADIO") {
+
+                options.rules["required"] = true;
+                if (options.message) {
+                    options.messages["required"] = options.message;
+                }
+            }
+        });
+    </script>
+}
+
