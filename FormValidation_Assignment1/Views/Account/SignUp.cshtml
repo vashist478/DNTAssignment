@@ -20,6 +20,15 @@
         </div>
 
         <div class="control-group">
+
+            <label class="control-label">Name</label>
+            <div class="controls">
+                <input type="text" asp-for="Name" />
+                <span asp-validation-for="Name" class="txt-danger"></span>
+            </div>
+        </div>
+
+        <div class="control-group">
             <!-- Username -->
             <label class="control-label" for="username">Username</label>
             <div class="controls">
@@ -28,14 +37,7 @@
             </div>
         </div>
 
-        <div class="control-group">
 
-            <label class="control-label" for="email">Name</label>
-            <div class="controls">
-                <input type="text" asp-for="Name" />
-                <span asp-validation-for="Name" class="txt-danger"></span>
-            </div>
-        </div>
 
         <div class="control-group">
             <!-- Password-->
@@ -47,7 +49,7 @@
         </div>
 
         <div class="control-group">
-            <!-- Password -->
+
             <label class="control-label" for="password_confirm">Password (Confirm)</label>
             <div class="controls">
                 <input type="password" id="inpPassword" asp-for="ConfirmPassword" />
@@ -55,9 +57,18 @@
             </div>
         </div>
 
+
+        <div class="control-group">
+            <label class="control-label" for="Contact Number">Contact Number</label>
+            <div class="controls">
+                <input type="text" id="inpContactNumber" asp-for="ContactNumber" />
+                <span asp-validation-for="ContactNumber" class="txt-danger"></span>
+            </div>
+        </div>
+
         <div class="control-group">
 
-            <label class="control-label" for="password_confirm">Country</label>
+            <label class="control-label">Country</label>
             <div class="controls">
                 <select id="ddlCountry" asp-for="Country" asp-items="@(new SelectList(ViewBag.Country, "CountryId", "CountryName"))">
                     <option value="">--Select Country--</option>
@@ -78,24 +89,13 @@
             </div>
         </div>
 
-
-        <div class="control-group">
-            <!-- Password -->
-            <label class="control-label" for="Contact Number">Contact Number</label>
-            <div class="controls">
-                <input type="text" id="inpContactNumber" asp-for="ContactNumber" />
-                <span asp-validation-for="ContactNumber" class="txt-danger"></span>
-            </div>
-        </div>
-
-
         <div class="control-group">
             <label class="control-label" for="password_confirm">Gender</label>
             <div class="controls">
                 @*@foreach (var item in Html.GetEnumSelectList<Gender>())
-                    {
-                        <input type="radio" asp-for="Gender" value="@item.Text" />@item.Text
-                    }*@
+                {
+                    <input type="radio" asp-for="Gender" value="@item.Text" />@item.Text
+                }*@
                 @foreach (var gender in Model.Genders)
                 {
                     <input type="radio" asp-for="Gender" id="Gender@(gender)" value="1" />@gender

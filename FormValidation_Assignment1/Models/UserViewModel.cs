@@ -24,6 +24,8 @@ namespace FormValidation_Assignment1.Models
         public string ConfirmPassword { get; set; }
 
         [Required(ErrorMessage = "Enter your contact number")]
+        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
         public string ContactNumber { get; set; }
 
         [BindProperty, Required(ErrorMessage = "Select gender")]
@@ -32,7 +34,7 @@ namespace FormValidation_Assignment1.Models
         [ValidateCheckBoxAttribute(ErrorMessage = "Please check terms")]
         public bool Terms { get; set; }
         [ValidateCheckBoxAttribute(ErrorMessage = "Select gender")]
-        public string[] Genders = new[] { "Male", "Female", "Unspecified" };
+        public string[] Genders = new[] { "Male", "Female", "Others" };
 
         [Required(ErrorMessage = "Please select country")]
         public string Country { get; set; }

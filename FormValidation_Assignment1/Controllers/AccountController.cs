@@ -22,7 +22,6 @@ namespace FormValidation_Assignment1.Controllers
         {
             // ValidateFields(model);
 
-       
             if (ModelState.IsValid)
             {
                 return RedirectToAction("Message");
@@ -83,6 +82,10 @@ namespace FormValidation_Assignment1.Controllers
             // return View();
         }
 
+        /// <summary>
+        /// Sk: Create Country record
+        /// </summary>
+        /// <returns></returns>
         public List<Country> GetCountry()
         {
             List<Country> countries = new List<Country>();
@@ -94,6 +97,11 @@ namespace FormValidation_Assignment1.Controllers
             return countries;
         }
 
+        /// <summary>
+        /// Sk: Bind State on selection of country
+        /// </summary>
+        /// <param name="CountryId"></param>
+        /// <returns></returns>
         public IActionResult GetState(int CountryId)
         {
             List<State> states = new List<State>
