@@ -33,11 +33,13 @@ namespace FormValidation_Assignment1.Models
         [ValidateCheckBoxAttribute(ErrorMessage = "Select gender")]
         public string[] Genders = new[] { "Male", "Female", "Unspecified" };
 
-        [Required(ErrorMessage = "Please enter city")]
-        public string State { get; set; }
-
         [Required(ErrorMessage = "Please select country")]
         public string Country { get; set; }
+
+        [Required(ErrorMessage = "Please enter State")]
+        public string State { get; set; }
+
+        
 
     }
 

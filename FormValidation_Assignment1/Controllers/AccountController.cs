@@ -12,33 +12,23 @@ namespace FormValidation_Assignment1.Controllers
     {
         public IActionResult SignUp()
         {
-            //CascadingModel mymodel = new CascadingModel();
-            //mymodel.Country = GetCountry();
-            //mymodel.State = GetState();
-            //return View(mymodel);
-
-
-            int CountryId = 0;
             ViewBag.Country = GetCountry();
             UserViewModel mymodel = new UserViewModel();
             return View(mymodel);
-
-
         }
 
         [HttpPost]
         public IActionResult SignUp(UserViewModel model)
         {
-
             // ValidateFields(model);
-
             if (ModelState.IsValid)
             {
                 return RedirectToAction("Message");
             }
 
-
-            return View();
+            ViewBag.Country = GetCountry();
+            UserViewModel mymodel = new UserViewModel();
+            return View(mymodel);
         }
 
         public IActionResult Message()

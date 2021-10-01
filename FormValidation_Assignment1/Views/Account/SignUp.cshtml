@@ -57,10 +57,10 @@
 
             <label class="control-label" for="password_confirm">Country</label>
             <div class="controls">
-                <select id="ddlCountry" asp-for="Country" class="form-control" asp-items="@(new SelectList(ViewBag.Country, "CountryId", "CountryName"))">
-                    <option value="0">--Select Country--</option>
+                <select id="ddlCountry" asp-for="Country"  asp-items="@(new SelectList(ViewBag.Country, "CountryId", "CountryName"))">
+                    <option value="">--Select Country--</option>
                 </select>
-                @*<span asp-validation-for="Country" class="txt-danger"></span>*@
+                <span asp-validation-for="Country" class="txt-danger"></span>
                 <span id="spnCountryErrorMsg" class="txt-danger"></span>
             </div>
         </div>
@@ -77,10 +77,10 @@
         <div class="control-group">
             <label class="control-label" for="password_confirm">State</label>
             <div class="controls">
-                <select id="ddlStates" class="form-control" asp-for="State">
-                    <option value="0">--Select State--</option>
+                <select id="ddlStates" class="custom-select" asp-for="State">
+                    <option value="">--Select State--</option>
                 </select>
-                @*<span asp-validation-for="Country" class="txt-danger"></span>*@
+                <span asp-validation-for="State" class="txt-danger"></span>
                 <span id="spnStateErrorMsg" class="txt-danger"></span>
             </div>
         </div>
@@ -114,7 +114,7 @@
         <div class="control-group">
             <!-- Button -->
             <div class="controls">
-                <input type="submit" onclick="ValidateCascadingInfo()" value="Sign Up" />
+                <input type="submit" value="Sign Up" />
             </div>
         </div>
     </fieldset>
