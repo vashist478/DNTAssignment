@@ -18,6 +18,7 @@
         <div id="legend">
             <legend class="">Register</legend>
         </div>
+
         <div class="control-group">
             <!-- Username -->
             <label class="control-label" for="username">Username</label>
@@ -49,30 +50,22 @@
             <!-- Password -->
             <label class="control-label" for="password_confirm">Password (Confirm)</label>
             <div class="controls">
-                <input type="password" id="inpPassword" asp-for="Password" />
-                <span asp-validation-for="Password" class="txt-danger"></span>
+                <input type="password" id="inpPassword" asp-for="ConfirmPassword" />
+                <span asp-validation-for="ConfirmPassword" class="txt-danger"></span>
             </div>
         </div>
+
         <div class="control-group">
 
             <label class="control-label" for="password_confirm">Country</label>
             <div class="controls">
-                <select id="ddlCountry" asp-for="Country"  asp-items="@(new SelectList(ViewBag.Country, "CountryId", "CountryName"))">
+                <select id="ddlCountry" asp-for="Country" asp-items="@(new SelectList(ViewBag.Country, "CountryId", "CountryName"))">
                     <option value="">--Select Country--</option>
                 </select>
                 <span asp-validation-for="Country" class="txt-danger"></span>
                 <span id="spnCountryErrorMsg" class="txt-danger"></span>
             </div>
         </div>
-
-        @*<div class="control-group">
-                <label class="control-label" for="password_confirm">State</label>
-                <div class="controls">
-                    <select id="ddlState" class="form-control" asp-items="@(new SelectList(ViewBag.State, "StateId", "StateName"))">
-                        <option value="">--Select State--</option>
-                    </select>
-                </div>
-            </div>*@
 
         <div class="control-group">
             <label class="control-label" for="password_confirm">State</label>
@@ -84,6 +77,17 @@
                 <span id="spnStateErrorMsg" class="txt-danger"></span>
             </div>
         </div>
+
+
+        <div class="control-group">
+            <!-- Password -->
+            <label class="control-label" for="Contact Number">Contact Number</label>
+            <div class="controls">
+                <input type="text" id="inpContactNumber" asp-for="ContactNumber" />
+                <span asp-validation-for="ContactNumber" class="txt-danger"></span>
+            </div>
+        </div>
+
 
         <div class="control-group">
             <label class="control-label" for="password_confirm">Gender</label>
@@ -99,8 +103,8 @@
                 <span asp-validation-for="Gender" class="txt-danger"></span>
             </div>
         </div>
-        <div class="control-group">
 
+        <div class="control-group">
             <label class="control-label" for="password_confirm"> Accept Terms: </label>
             <div class="controls">
                 <input type="checkbox" asp-for="Terms" />
@@ -108,8 +112,6 @@
                 </span>
             </div>
         </div>
-
-
 
         <div class="control-group">
             <!-- Button -->
@@ -134,7 +136,7 @@
 
             var spnCountryErrorMsg = document.getElementById("spnCountryErrorMsg");
             var spnStateErrorMsg = document.getElementById("spnStateErrorMsg");
-          
+
             if (Country == "0") {
 
                 spnCountryErrorMsg.innerHTML = "please select country";
@@ -156,12 +158,12 @@
             $("#ddlCountry").change(function () {
                 $.get("/Account/GetState", { CountryId: $("#ddlCountry").val() }, function (data) {
 
-                    var spnCountryErrorMsg = document.getElementById("spnCountryErrorMsg").innerHTML="";
-                    var spnStateErrorMsg = document.getElementById("spnStateErrorMsg").innerHTML="";
+                    var spnCountryErrorMsg = document.getElementById("spnCountryErrorMsg").innerHTML = "";
+                    var spnStateErrorMsg = document.getElementById("spnStateErrorMsg").innerHTML = "";
                     $("#ddlStates").empty();
-                    $("#ddlStates").append("<option value='" + "0" + "'>" + "--select state--" + "</option>")
+                    $("#ddlStates").append("<option value='" + "" + "'>" + "--select state--" + "</option>")
                     $.each(data, function (index, row) {
-                       
+
                         $("#ddlStates").append("<option value='" + row.stateId + "'>" + row.stateName + "</option>")
                     });
                 });

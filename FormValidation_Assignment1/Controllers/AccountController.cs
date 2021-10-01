@@ -21,6 +21,8 @@ namespace FormValidation_Assignment1.Controllers
         public IActionResult SignUp(UserViewModel model)
         {
             // ValidateFields(model);
+
+       
             if (ModelState.IsValid)
             {
                 return RedirectToAction("Message");

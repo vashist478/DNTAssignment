@@ -18,8 +18,9 @@ namespace FormValidation_Assignment1.Models
 
         [Required(ErrorMessage = "Please enter password")]
         public string Password { get; set; }
-
-        [Compare("Password", ErrorMessage = "Please enter confirm password")]
+        
+        [Required(ErrorMessage = "Please enter confirm password")]
+        [Compare("Password", ErrorMessage = "Password and Confirmation Password must match.")]
         public string ConfirmPassword { get; set; }
 
         [Required(ErrorMessage = "Enter your contact number")]
@@ -38,8 +39,6 @@ namespace FormValidation_Assignment1.Models
 
         [Required(ErrorMessage = "Please enter State")]
         public string State { get; set; }
-
-        
 
     }
 
